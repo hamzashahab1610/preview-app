@@ -4,7 +4,6 @@ const multer = require("multer");
 const File = require("../model/file");
 const Router = express.Router();
 const FilePreviews = require("filepreviews");
-const { Route } = require("react-router-dom");
 const axios = require("axios");
 
 const fp = new FilePreviews({
