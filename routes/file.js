@@ -111,7 +111,7 @@ Router.post("/previewUrl", (req, res) => {
 					.catch(function (error) {
 						res.status(400).send(error);
 					});
-			}, 2000);
+			}, 5000);
 		}
 	});
 });

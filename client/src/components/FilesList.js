@@ -25,6 +25,8 @@ const FilesList = () => {
 		},
 	};
 
+	console.log("previewUrl", previewUrl);
+
 	const getPreviewUrl = async (url) => {
 		console.log("url", url);
 
@@ -98,6 +100,8 @@ const FilesList = () => {
 	};
 
 	const previewFile = async (id, title, url) => {
+		setpreviewUrl("");
+
 		setx({ id: id, title: title, url: url });
 		setPreview(true);
 		try {
@@ -214,16 +218,16 @@ const FilesList = () => {
 														<a
 															href="#/"
 															onClick={() => {
-																getPreviewUrl(
-																	url,
-																);
-
-																openModal();
 																previewFile(
 																	_id,
 																	title,
 																	url,
 																);
+																getPreviewUrl(
+																	url,
+																);
+
+																openModal();
 															}}
 														>
 															{description}
