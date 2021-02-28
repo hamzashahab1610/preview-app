@@ -1,0 +1,35 @@
+=> NAME: GREENIFY, FLORA, PlANTIFY, PAK PLANTS, PLANT LIFE, WORTHY PLANTS
+          ^
+         Winner by Randomness
+
+=> DESCRIPTION: An app to encourage people to plant more trees more often by implementing a points system.
+
+=> MAIN FEATURES:
+- points system
+- user experience in gardening
+- daily watering according to plant type
+- plant maintainance(fertilizaion, trimming etc)
+- tracking plant growth(via camera)
+- map
+- rewards for high points
+- community (social media type sharing of progress)*
+
+=> SUPPORTING FEATURES
+- daily gardening tips
+- places to plant trees, buy seeds etc
+
+=>GOOGLE TECHNOLOGIES:
+- Mobile App (Flutter) **
+- PWA (React)
+- Firebase (Hosting + Auth + Firestore + Storage + ML Kit)
+- GCP (cloud)
+- TensorFlow / ML Kit (Machine Learning, tracking plant growth)
+- Google Maps
+- Google-Analytics
+- Calender
+- Material Design (UI/UX)
+
+
+
+* optional
+** need to learn
