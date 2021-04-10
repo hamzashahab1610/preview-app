@@ -1,6 +1,5 @@
 const path = require("path");
 const express = require("express");
-const multer = require("multer");
 const File = require("../model/file");
 const Router = express.Router();
 const FilePreviews = require("filepreviews");
@@ -17,111 +16,131 @@ const options = {
 	format: "png",
 };
 
-const upload = multer({
-	storage: multer.diskStorage({
-		destination(req, file, cb) {
-			cb(null, "./files");
-		},
-		filename(req, file, cb) {
-			cb(null, `${new Date().getTime()}_${file.originalname}`);
-		},
-	}),
-	limits: {
-		fileSize: 1000000, // max file size 1MB = 1000000 bytes
-	},
-	fileFilter(req, file, cb) {
-		if (
-			!file.originalname.match(
-				/\.(jpeg|jpg|png|pdf|doc|docx|xlsx|xls|txt|json|csv|xml|html|ppt|pptx|py|php|css|rb|cs)$/,
-			)
-		) {
-			return cb(
-				new Error(
-					"only upload files with jpg, jpeg, png, pdf, doc, docx, xslx, xls, json, txt, csv, xml, html, ppt, pptx format.",
-				),
-			);
-		}
-		cb(undefined, true); // continue with upload
-	},
-});
-
 Router.post(
 	"/upload",
 	(req, res) => {
-		console.log("req", req.body);
-		try {
-			const { title, description, url } = req.body;
+		const { title, url, thumbnailUrl } = req.body;
+		var previewId;
+		var config;
+		var thumbnail = thumbnailUrl;
 
-			//const { path, mimetype } = req.file;
-			const file = new File({
-				title,
-				description,
-				//file_path: path,
-				//file_mimetype: mimetype,
-				url: url,
-			});
-			file.save();
-			res.send("file uploaded successfully.");
+		console.log("body", req.body);
+
+		try {
+			if (thumbnail === "" || !thumbnail) {
+				fp.generate(url, options, function (err, result) {
+					if (err) {
+						console.log("err", err);
+						throw new Error(err);
+					}
+					console.log("result", result.id);
+
+					previewId = result.id;
+
+					config = {
+						method: "get",
+						url: `https://api.filepreviews.io/v2/previews/${previewId}`,
+						headers: {
+							Authorization:
+								"Basic bjlLV1lBV0pCUDRyaEZBWVBObGk2U1JOZ0R3RHJ4OmE3dkU4MFByejJ6VUt5ZmxxRUpyZ2d4MlAxSWlnYQ==",
+						},
+					};
+
+					if (result.id) {
+						setTimeout(() => {
+							axios(config)
+								.then(function (response) {
+									console.log("preview response", response);
+									thumbnail = response.data.preview.url;
+									const file = new File({
+										title,
+										// description,
+										url: url,
+										thumbnail: thumbnail,
+									});
+									file.save();
+									res.send("file uploaded successfully.");
+								})
+								.catch(function (error) {
+									console.log("error", error);
+									res.status(400).send(error);
+								});
+						}, 5000);
+					}
+				});
+			} else {
+				const file = new File({
+					title,
+					// description,
+					url: url,
+					thumbnail: thumbnail,
+				});
+				file.save();
+				res.send("file uploaded successfully.");
+			}
 		} catch (error) {
 			res.status(400).send(
 				"Error while uploading file. Try again later.",
 			);
 		}
 	},
-	(error, req, res, next) => {
+	(error, res) => {
 		if (error) {
 			res.status(500).send(error.message);
 		}
 	},
 );
 
-Router.post("/previewUrl", (req, res) => {
-	const { url } = req.body;
-	console.log("url", url);
-	var previewId;
-	var config;
-
-	fp.generate(url, options, function (err, result) {
-		if (err) {
-			console.log("err", err);
-			throw new Error(err);
-		}
-		console.log("result", result.id);
-
-		previewId = result.id;
-
-		if (result.id) {
-			setTimeout(() => {
-				config = {
-					method: "get",
-					url: `https://api.filepreviews.io/v2/previews/${previewId}`,
-					headers: {
-						Authorization:
-							"Basic bjlLV1lBV0pCUDRyaEZBWVBObGk2U1JOZ0R3RHJ4OmE3dkU4MFByejJ6VUt5ZmxxRUpyZ2d4MlAxSWlnYQ==",
-					},
-				};
-
-				console.log("config", config);
-
-				axios(config)
-					.then(function (response) {
-						console.log("Heloooooooo", response.data);
-						res.status(200).send(response.data);
-					})
-					.catch(function (error) {
-						res.status(400).send(error);
-					});
-			}, 5000);
-		}
-	});
-});
-
 Router.get("/getAllFiles", async (req, res) => {
+	var thumbnail;
 	try {
 		const files = await File.find({});
 		const sortedByCreationDate = files.sort(
 			(a, b) => b.createdAt - a.createdAt,
 		);
+
+		console.log(sortedByCreationDate);
+
+		// sortedByCreationDate.map((file) => {
+		// 	if (!file.thumbnail) {
+		// 		fp.generate(file.url, options, function (err, result) {
+		// 			if (err) {
+		// 				console.log("err", err);
+		// 				throw new Error(err);
+		// 			}
+		// 			console.log("result", result.id);
+
+		// 			previewId = result.id;
+
+		// 			if (result.id) {
+		// 				setTimeout(() => {
+		// 					config = {
+		// 						method: "get",
+		// 						url: `https://api.filepreviews.io/v2/previews/${previewId}`,
+		// 						headers: {
+		// 							Authorization:
+		// 								"Basic bjlLV1lBV0pCUDRyaEZBWVBObGk2U1JOZ0R3RHJ4OmE3dkU4MFByejJ6VUt5ZmxxRUpyZ2d4MlAxSWlnYQ==",
+		// 						},
+		// 					};
+
+		// 					axios(config)
+		// 						.then(function (response) {
+		// 							thumbnail = response.data.preview.url;
+		// 							File.update(
+		// 								{ url: file.url },
+		// 								{ thumbnail: thumbnail },
+		// 							).exec();
+		// 							// res.status(200).send(response.data);
+		// 						})
+		// 						.catch(function (error) {
+		// 							res.status(400).send(error);
+		// 						});
+		// 				}, 5000);
+		// 			}
+		// 		});
+		// 	}
+		// });
+
 		res.send(sortedByCreationDate);
 	} catch (error) {
 		res.status(400).send(

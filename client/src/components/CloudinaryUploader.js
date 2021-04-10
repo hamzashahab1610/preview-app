@@ -1,15 +1,26 @@
 import React from "react";
 import { WidgetLoader, Widget } from "react-cloudinary-upload-widget";
 
-function CloudinaryUploader({ setUrl }) {
+function CloudinaryUploader({ setUrl, setTitle, setThumbnailUrl }) {
 	const successCallBack = (res) => {
 		console.log("result", res);
-		// var x = res.info.thumbnail_url.replace("h_60", "h_400");
-		// var y = x.replace("w_90", "w_400");
-		// console.log("thumb", y);
+		var thumbnail = res.info.thumbnail_url;
+		if (thumbnail) {
+			var hindex = thumbnail.indexOf("h_");
+			var windex = thumbnail.indexOf("w_");
+			var h = thumbnail.slice(hindex, hindex + 4);
+			var w = thumbnail.slice(windex, windex + 4);
+			console.log("h", h);
+			console.log("w", w);
+			thumbnail = thumbnail.replace(h, "h_400");
+			thumbnail = thumbnail.replace(w, "w_400");
+		}
+
+		console.log("thumbnail", thumbnail);
+
 		setUrl(res.info.secure_url);
-		// setThumbnail(y);
-		// setDuration(res.info.duration);
+		setTitle(res.info.original_filename);
+		setThumbnailUrl(thumbnail);
 	};
 	const failureCallBack = (response) => {
 		console.log("response", response);

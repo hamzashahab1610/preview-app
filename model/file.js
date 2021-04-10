@@ -7,22 +7,17 @@ const fileSchema = mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		description: {
-			type: String,
-			required: true,
-			trim: true,
-		},
-		// file_path: {
+		// description: {
 		// 	type: String,
 		// 	required: true,
-		// },
-		// file_mimetype: {
-		// 	type: String,
-		// 	required: true,
+		// 	trim: true,
 		// },
 		url: {
 			type: String,
 			required: true,
+		},
+		thumbnail: {
+			type: String,
 		},
 	},
 	{

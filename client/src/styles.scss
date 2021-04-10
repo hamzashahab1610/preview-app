@@ -4,6 +4,48 @@
 	box-sizing: border-box;
 }
 
+.img-container {
+	width: 17rem;
+	height: 15rem;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+
+.file-card-img {
+	width: 17rem;
+	border-radius: 10px;
+}
+
+.file-card-container {
+	border: 2px solid lightgray;
+	border-radius: 10px;
+	padding: 0.5rem;
+	// margin-left: 1rem;
+	// margin-right: 1rem;
+}
+
+.hello {
+	width: 90%;
+	margin: auto;
+}
+
+button {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.file-card-bottom {
+	font-size: 12px;
+	margin-left: 3px;
+	margin-top: 1px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
 .close-cross {
 	text-align: end;
 	cursor: pointer;
