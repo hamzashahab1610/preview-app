@@ -16,6 +16,22 @@ function CloudinaryUploader({ setUrl, setTitle, setThumbnailUrl }) {
 			thumbnail = thumbnail.replace(w, "w_400");
 		}
 
+		if (res.info.secure_url.includes("py"))
+			thumbnail =
+				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618241445/py_jk6htm.png";
+
+		if (res.info.secure_url.includes("java"))
+			thumbnail =
+				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618241444/java_lfiicb.png";
+
+		if (res.info.secure_url.includes("json"))
+			thumbnail =
+				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618241444/json_rvihpr.png";
+
+		if (res.info.secure_url.includes("xml"))
+			thumbnail =
+				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618241443/xml_q3btk1.png";
+
 		console.log("thumbnail", thumbnail);
 
 		setUrl(res.info.secure_url);

@@ -5,18 +5,29 @@
 }
 
 .img-container {
-	width: 17rem;
-	height: 15rem;
+	// width: 17rem;
+	height: 12rem;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	margin: auto;
+}
+
+.logo {
+	text-align: right;
 }
 
 .file-card-img {
 	width: 17rem;
 	border-radius: 10px;
+	// align-self: center;
+}
+
+.other-files {
+	width: 10rem;
+	border-radius: 10px;
+	align-self: center;
 }
 
 .file-card-container {

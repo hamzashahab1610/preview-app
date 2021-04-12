@@ -18,6 +18,7 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "11.2.0",
     "react-file-previewer": "^0.6.3",
+    "react-file-previewer-v2": "^0.6.3",
     "react-file-viewer": "^1.2.1",
     "react-modal": "^3.11.2",
     "react-preview-file": "^0.1.3",
