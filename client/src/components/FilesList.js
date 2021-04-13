@@ -44,14 +44,17 @@ const FilesList = () => {
 					gridGap: "1.5rem",
 				}}
 			>
-				{filesList.map((file) => (
-					<FileCard
-						url={file.url}
-						img={file.thumbnail}
-						title={file.title}
-						id={file._id}
-					/>
-				))}
+				{filesList.map((file) => {
+					if (file.title.toLowerCase().search(search) > -1)
+						return (
+							<FileCard
+								url={file.url}
+								img={file.thumbnail}
+								title={file.title}
+								id={file._id}
+							/>
+						);
+				})}
 			</div>
 		</div>
 	);
