@@ -20,12 +20,14 @@
 
 .file-card-img {
 	width: 17rem;
+	// height: 100%;
 	border-radius: 10px;
 	// align-self: center;
 }
 
 .other-files {
-	width: 10rem;
+	width: auto;
+	height: 100%;
 	border-radius: 10px;
 	align-self: center;
 }

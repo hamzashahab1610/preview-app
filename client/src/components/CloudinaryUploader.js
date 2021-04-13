@@ -32,6 +32,14 @@ function CloudinaryUploader({ setUrl, setTitle, setThumbnailUrl }) {
 			thumbnail =
 				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618241443/xml_q3btk1.png";
 
+		if (res.info.secure_url.includes("html"))
+			thumbnail =
+				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618327474/html_d5przy.png";
+
+		if (res.info.secure_url.includes("css"))
+			thumbnail =
+				"https://res.cloudinary.com/dcvjvqymt/image/upload/v1618327480/css_rr3p4d.png";
+
 		console.log("thumbnail", thumbnail);
 
 		setUrl(res.info.secure_url);

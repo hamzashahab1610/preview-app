@@ -14,7 +14,10 @@ import PPT from "../assets/ppt.png";
 import XML from "../assets/xml.png";
 import PY from "../assets/py.png";
 import JAVA from "../assets/java.png";
+import HTML from "../assets/html.png";
+import CSS from "../assets/css.png";
 import FilePreviewer from "react-file-previewer";
+import { useEffect } from "react";
 
 function FileCard({ img, title, url, id }) {
 	const [errorMsg, setErrorMsg] = useState("");
@@ -22,6 +25,20 @@ function FileCard({ img, title, url, id }) {
 		`https://docs.google.com/viewer?embedded=true&url=${url}`,
 	);
 	const [modalIsOpen, setIsOpen] = React.useState(false);
+	const frame = () => (
+		<iframe
+			src={previewUrl}
+			width="100%"
+			height="100%"
+			frameborder="0"
+		></iframe>
+	);
+
+	var x = frame();
+
+	useEffect(() => {
+		x = frame();
+	}, [previewUrl]);
 
 	function openModal() {
 		setIsOpen(true);
@@ -74,12 +91,7 @@ function FileCard({ img, title, url, id }) {
 				url.includes("jpg") ? (
 					<img src={url} width="100%" height="100%" frameborder="0" />
 				) : (
-					<iframe
-						src={previewUrl}
-						width="100%"
-						height="100%"
-						frameborder="0"
-					></iframe>
+					x
 				)}
 
 				{/* <button
@@ -98,7 +110,12 @@ function FileCard({ img, title, url, id }) {
 					{url.includes("py") ||
 					url.includes("java") ||
 					url.includes("json") ||
-					url.includes("xml") ? (
+					url.includes("xml") ||
+					url.includes("html") ||
+					url.includes("css") ||
+					url.includes("png") ||
+					url.includes("jpg") ||
+					url.includes("jpeg") ? (
 						<img className="other-files" src={img} alt="" />
 					) : (
 						<img className="file-card-img" src={img} alt="" />
@@ -127,6 +144,10 @@ function FileCard({ img, title, url, id }) {
 						<img src={PY} alt="" width="30px" />
 					) : url.includes("java") ? (
 						<img src={JAVA} alt="" width="30px" />
+					) : url.includes("html") ? (
+						<img src={HTML} alt="" width="30px" />
+					) : url.includes("css") ? (
+						<img src={CSS} alt="" width="30px" />
 					) : (
 						<img src="" alt="" width="30px" />
 					)}
