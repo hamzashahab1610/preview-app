@@ -19,12 +19,13 @@
 }
 
 .file-card-img {
-	width: 17rem;
-	// height: 100%;
+	width: auto;
+	height: 100%;
 	border-radius: 10px;
-	transform-origin: 18% -10%;
-	transform: scale(2);
-	// align-self: center;
+	// transform-origin: 16% -10%;
+	transform-origin: top;
+	transform: scale(2.4);
+	align-self: center;
 }
 
 .other-files {
