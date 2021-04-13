@@ -65,7 +65,7 @@ Router.post(
 									console.log("error", error);
 									res.status(400).send(error);
 								});
-						}, 9000);
+						}, 7000);
 					}
 				});
 			} else {
